@@ -815,7 +815,10 @@ class XSDtoSHACL:
 
         for key in self.root.attrib:
             if key == "targetNamespace":
-                self.xsdTargetNS = Namespace(self.root.attrib[key])
+                # Normalize namespace by removing trailing / (if present) and then adding it back
+                normalized_ns = self.root.attrib[key].rstrip('/') + '/'
+                self.xsdTargetNS = Namespace(normalized_ns)
+                self.NS = Namespace(normalized_ns)           
 
         print("#########Start translating XSD to SHACL shapes")
         start = time.time()
