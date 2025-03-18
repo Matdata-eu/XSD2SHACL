@@ -23,7 +23,7 @@ class XSDtoSHACL:
         self.SHACL = Graph()
         self.shapes = []
         self.extensionShapes = []
-        self.extension = False
+        #self.extension = False
         self.enumerationShapes = []
         self.choiceShapes = []
         self.order_list = []
@@ -289,7 +289,7 @@ class XSDtoSHACL:
         self.shapes.append(subject)
         # self.shapes.append(ps_subject)
         # self.simpleContent = subject
-        self.extension = True
+        #self.extension = True
         self.SHACL.add((subject,self.rdfSyntax['type'],self.shaclNS.NodeShape))
         self.SHACL.add((subject,self.shaclNS.name,Literal(element_name)))
         
@@ -723,10 +723,13 @@ class XSDtoSHACL:
                 self.transRestriction(tag,value)
             # Translate next node
             self.translate(next_node)
-                
-            if (("element" in tag) and (child.get("name"))) or (("attribute" in tag) and ("attributeGroup" not in tag) and not child.get("ref")) or (("complexType" in tag) and (child.get("name"))) or (("attributeGroup" in tag) and (child.get("name"))) or (("group" in tag) and (child.get("name") or child.get("id"))) or self.extension:
+
+            # removed: or self.extension
+            # an <xs:extension> is always inside another case that will return true below
+            # there is a proven risk (taf_cat_complexe.xsd from the TAF_TSI) that the self.extension=true will result in an unwanted 2x pop()
+            if (("element" in tag) and (child.get("name"))) or (("attribute" in tag) and ("attributeGroup" not in tag) and not child.get("ref")) or (("complexType" in tag) and (child.get("name"))) or (("attributeGroup" in tag) and (child.get("name"))) or (("group" in tag) and (child.get("name") or child.get("id"))):
                 self.shapes.pop()
-                self.extension = False
+                #self.extension = False
                 # if (self.shapes!=[]) and (self.simpleContent == self.shapes[-1]):
                 #     self.shapes.pop()
                 #     self.simpleContent = False
