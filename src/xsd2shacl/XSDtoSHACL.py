@@ -271,7 +271,8 @@ class XSDtoSHACL:
                 self.transRestriction(name, xsd_element.attrib[name], ps_subject)
 
         element_type = xsd_element.get("type")
-        self.SHACL.add((subject,self.shaclNS.node,self.NS[f'NodeShape/{element_type}'])) #Will be translated later
+        if element_type != None:
+            self.SHACL.add((subject,self.shaclNS.node,self.NS[f'NodeShape/{element_type}'])) #Will be translated later
 
         return xsd_element
 
