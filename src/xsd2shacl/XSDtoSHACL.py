@@ -329,7 +329,7 @@ class XSDtoSHACL:
                     extension_node = self.root.find(f".//*[@name='{type_name}']")
                     extension_node_type = self.isSimpleComplex(extension_node)
                     if extension_node_type == 0:
-                        next_node = self.root.find(f'.//{{http://www.w3.org/2001/XMLSchema}}simpleType[@name="{element_type}"]')
+                        next_node = self.root.find(f'.//{{http://www.w3.org/2001/XMLSchema}}simpleType[@name="{type_name}"]')
                         # redirect current process to the next root (simple type)
                         return next_node 
                     elif extension_node_type == 1:
