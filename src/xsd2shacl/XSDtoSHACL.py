@@ -667,8 +667,12 @@ class XSDtoSHACL:
                     ref_node = self.root.find(f".//*[@name='{ref}']")
                     if ref_node != None:
                         element_type = self.isSimpleComplex(ref_node)
-                        if element_type == 0:
-                            self.SHACL.add((self.shapes[-1],self.shaclNS.property,self.NS[f'PropertyShape/{ref}']))
+                        if element_type == 0:                            
+                            if "attribute" in ref_node.tag:
+                                object = self.NS[f'PropertyShape/@{ref}']
+                            else:
+                                object = self.NS[f'PropertyShape/{ref}']
+                            self.SHACL.add((self.shapes[-1],self.shaclNS.property,object))
                         elif element_type == 1:
                             self.SHACL.add((self.shapes[-1],self.shaclNS.node,self.NS[f'NodeShape/{ref}']))
                 else:
