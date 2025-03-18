@@ -107,22 +107,22 @@ class XSDtoSHACL:
 
         elif "maxExclusive" in tag:
             p = self.shaclNS.maxExclusive
-            o = Literal(int(value))
+            o = Literal(value)
             self.SHACL.add((subject,p,o))
 
         elif "minExclusive" in tag:
             p = self.shaclNS.minExclusive
-            o = Literal(int(value))
+            o = Literal(value)
             self.SHACL.add((subject,p,o))
   
         elif "maxInclusive" in tag:
             p = self.shaclNS.maxInclusive
-            o = Literal(int(value))
+            o = Literal(value)
             self.SHACL.add((subject,p,o))
 
         elif "minInclusive" in tag:
             p = self.shaclNS.minInclusive
-            o = Literal(int(value))
+            o = Literal(value)
             self.SHACL.add((subject,p,o))
 
         elif "length" in tag:        
