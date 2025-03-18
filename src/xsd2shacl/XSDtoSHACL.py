@@ -50,7 +50,13 @@ class XSDtoSHACL:
         elif xsd_type.split(":")[-1] in self.type_list:
             return 0 #built-in type
         else:
-            child = self.root.find(f".//*[@name='{xsd_type}']",self.xsdNSdict)
+            xsd_type = xsd_type.split(":")[-1]
+            elements = self.root.findall(f".//*[@name='{xsd_type}']", self.xsdNSdict)
+            # can't combine both conditions as xmltree doesn't support the full xpath syntax
+            # sometimes, some elements are named after their type, we need to find the element that contains the type definition
+            # that means we need to find the complexType or the simpleType element with that name
+            child = next((e for e in elements if ("complexType" in e.tag or "simpleType" in e.tag)), None)
+
             if "complexType" in child.tag:
                 if child.attrib.get("mixed") == "true":
                     return "mixed"
