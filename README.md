@@ -3,25 +3,30 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![DOI](https://zenodo.org/badge/687035494.svg)](https://zenodo.org/badge/latestdoi/687035494)
 
-A tool to generate SHACL shapes from XSD for RDF graphs validation. 
+A tool to convert between SHACL shapes and XSD.
 
 - The results of comparison and evaluation of supported XSD components are under [comparison folder](https://github.com/dtai-kg/XSD2SHACL/tree/main/comparison).
 
-- The results of validation on two usecases are under [usecases folder](https://github.com/dtai-kg/XSD2SHACL/tree/main/usecases). 
+- The results of validation on two usecases are under [usecases folder](https://github.com/dtai-kg/XSD2SHACL/tree/main/usecases).
+
+- The design rules and mapping principles for SHACL-to-XSD conversion is documented in [MAPPING_RULES.md](MAPPING_RULES.md).
 
 ## Installation
 
 - From PyPi package
+
 ```bash
 pip install xsd2shacl
 ```
 
 - From source code:
+
 ```bash
 python -m pip install poetry
 poetry update
 poetry build
 ```
+
 ## Usage
 
 To translate XSD to SHACL shapes:
@@ -36,8 +41,21 @@ For example, if you execute the following:
 python -m xsd2shacl -x comparison/pos.xsd
 ```
 
-The generated shape file will then be located here: comparison/pos.xsd.shape.ttl. 
+The generated shape file will then be located here: comparison/pos.xsd.shape.ttl.
 
+To translate SHACL shapes to XSD:
+
+```bash
+python -m xsd2shacl -s SHACL_PATH [-x XSD_PATH]
+```
+
+For example, if you execute the following:
+
+```bash
+python -m xsd2shacl -s comparison/example.ttl
+```
+
+The generated XSD file will then be located here: comparison/example.ttl.xsd.
 
 ## Post-adjustment
 
@@ -49,7 +67,7 @@ To adjust the generated SHACL shapes with corresponding RML mapping files to the
 python -m xsd2shacl -i usecases/RINF/RINF-metadata.xsd.shape.ttl -r usecases/RINF/mappings/RINF-contact-line-systems.yml.ttl -a usecases/RINF/RINF-metadata.xsd.shape.RINF-contact-line-systems.adjustment.ttl
 ```
 
--  TED:
+- TED:
 
 ```bash
 python -m xsd2shacl -i usecases/TED/TED_EXPORT_merge.xsd.shape.ttl -r usecases/TED/mappings/F03 -a usecases/TED/TED_EXPORT_merge_F03.shape.adjustment.ttl
@@ -62,9 +80,10 @@ python usecases/RINF/metrics.py
 python usecases/TED/metrics.py
 ```
 
-## Cite 
+## Cite
 
 To cite our work:
+
 ```bib
 @inproceedings{duan2023xsd,
     author = {Duan, Xuemin and Chaves-Fraga, David and Dimou, Anastasia},
